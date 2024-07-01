@@ -22,11 +22,26 @@
   &:not(.collapsed){
     color: var(--accordion-active-color);
   }
+  svg.bi-chevron-down {
+    margin-left: auto;
+    transition: transform 0.2s ease-in-out;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
 }
 
 .accordion-button:not(.collapsed) {
   font-weight: var(--accordion-item-font-weight);
   box-shadow: none;
+  svg.bi-chevron-down {
+    transform: rotate(-180deg);
+  }
+}
+
+// Temporarily remove background-image for v1. 
+// Proper fix at v2  
+.accordion-button::after {
+  content:unset;
 }
 
 :host([first-of-type]) {
@@ -48,58 +63,8 @@
     border-top: 0;
   }
 }
-// @keyframes expand {
-//   0% {
-//     height: 64px;
-//     opacity: 0;
-//     display: none;
-//   }
 
-//   // 1%{
-//   //   display: block;
-//   //   opacity: 0;
-//   //   height:0;
-//   // }
-//   // 25%{
-//   //   height: 10px;
-//   //   opacity: 0.25;
-//   // }
-//   50%{
-//     height: 50%;
-//     opacity: 0.5;
-//   }
-
-//   100% {
-//     height: auto;
-//     opacity: 1;
-//     // display: block;
-//   }
-// }
 .hidden{
-  display:none;
+  display: none;
 }
-
-// .show {
-//   // animation:  linear;
-//   display: block;
-//   // overflow: hidden;
-//   // opacity: 1;
-//   animation-duration: 0.5s;
-//   animation-name: expand;
-//   animation-timing-function: linear;
-// }
-// .hide {
-//   display: none;
-//   // animation: expand 5s linear;
-//   animation-direction: reverse;
-//   animation-duration: 0.5s;
-//   animation-name: expand;
-//   animation-timing-function: linear;
-// }
-// .accordion-button.expand + .accordion-body {
- 
-// }
-// .accordion-button.collapsed + .accordion-body {
-//   animation: expand .2s ease-in-out;
-// }
 
