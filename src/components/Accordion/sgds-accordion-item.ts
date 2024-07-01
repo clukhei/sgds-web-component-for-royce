@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html, type PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import SgdsElement from "../../base/sgds-element";
@@ -43,6 +43,10 @@ export class SgdsAccordionItem extends SgdsElement {
   /** Optional for accordion item. Can be used to insert any utility classes such as `me-auto` */
   @property({ reflect: true }) accordionItemClasses: string;
 
+  firstUpdated() {
+      if (!this.open) this.body.classList.add('hidden')
+  }
+
   private handleSummaryClick() {
     if (this.open) {
       this.hide();
@@ -86,10 +90,10 @@ export class SgdsAccordionItem extends SgdsElement {
       }
 
       await stopAnimations(this.body);
-
+      this.body.classList.remove('hidden')
       const { keyframes, options } = getAnimation(this, "accordion.show");
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
-
+     
       this.emit("sgds-after-show");
     } else {
       // Hide
@@ -100,8 +104,9 @@ export class SgdsAccordionItem extends SgdsElement {
       }
 
       await stopAnimations(this.body);
-  
+
       const { keyframes, options } = getAnimation(this, "accordion.hide");
+      setTimeout(() => this.body.classList.add('hidden'), 200)
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.emit("sgds-after-hide");
     }
@@ -127,6 +132,7 @@ export class SgdsAccordionItem extends SgdsElement {
   }
 
   render() {
+    console.log('render')
     return html`
       <div
         part="base"
@@ -167,7 +173,7 @@ export class SgdsAccordionItem extends SgdsElement {
         <div
           class=${classMap({
             "accordion-body": true,
-            hidden: !this.open
+            // hidden: !this.open
           })}
         >
           <slot name="accordion-content" class="accordion-content" role="region" aria-labelledby="header"></slot>
