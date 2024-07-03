@@ -44,7 +44,7 @@ export class SgdsAccordionItem extends SgdsElement {
   @property({ reflect: true }) accordionItemClasses: string;
 
   firstUpdated() {
-      if (!this.open) this.body.classList.add('hidden')
+    if (!this.open) this.body.classList.add("hidden");
   }
 
   private handleSummaryClick() {
@@ -90,10 +90,10 @@ export class SgdsAccordionItem extends SgdsElement {
       }
 
       await stopAnimations(this.body);
-      this.body.classList.remove('hidden')
+      this.body.classList.remove("hidden");
+
       const { keyframes, options } = getAnimation(this, "accordion.show");
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
-     
       this.emit("sgds-after-show");
     } else {
       // Hide
@@ -106,7 +106,13 @@ export class SgdsAccordionItem extends SgdsElement {
       await stopAnimations(this.body);
 
       const { keyframes, options } = getAnimation(this, "accordion.hide");
-      setTimeout(() => this.body.classList.add('hidden'), 200)
+      const animationDuration = options.duration as number;
+      // Workaround to fix GSIB delay after animateTo.
+      //Setting a timeout of duration slightly less than animation's duraton to prevent case where animation runs faster than .hidden class is added
+      setTimeout(() => {
+        this.body.classList.add("hidden");
+      }, animationDuration - 20);
+
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.emit("sgds-after-hide");
     }
@@ -132,7 +138,6 @@ export class SgdsAccordionItem extends SgdsElement {
   }
 
   render() {
-    console.log('render')
     return html`
       <div
         part="base"
@@ -172,7 +177,7 @@ export class SgdsAccordionItem extends SgdsElement {
         </button>
         <div
           class=${classMap({
-            "accordion-body": true,
+            "accordion-body": true
             // hidden: !this.open
           })}
         >
@@ -188,7 +193,7 @@ setDefaultAnimation("accordion.show", {
     { height: "0", opacity: "0" },
     { height: "auto", opacity: "1" }
   ],
-  options: { duration: 200, easing: "ease-in-out" }
+  options: { duration: 350, easing: "ease-in-out" }
 });
 
 setDefaultAnimation("accordion.hide", {
@@ -196,7 +201,7 @@ setDefaultAnimation("accordion.hide", {
     { height: "auto", opacity: "1" },
     { height: "0", opacity: "0" }
   ],
-  options: { duration: 200, easing: "ease-in-out" }
+  options: { duration: 350, easing: "ease-in-out" }
 });
 
 export default SgdsAccordionItem;
