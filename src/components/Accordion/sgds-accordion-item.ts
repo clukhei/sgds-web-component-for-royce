@@ -164,6 +164,7 @@ export class SgdsAccordionItem extends SgdsElement {
           @keydown=${this.handleSummaryKeyDown}
         >
           <slot name="accordion-header"></slot>
+          <slot name="caret-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -177,9 +178,10 @@ export class SgdsAccordionItem extends SgdsElement {
               d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
             />
           </svg>
+        </slot>
         </button>
         <div class="accordion-body">
-          <slot name="accordion-content" class="accordion-content" role="region" aria-labelledby="header"></slot>
+          <slot name="accordion-content" class="accordion-content" role="region" aria-labelledby="header" part="content"></slot>
         </div>
       </div>
     `;

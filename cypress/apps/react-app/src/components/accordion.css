@@ -1,0 +1,25 @@
+sgds-accordion-item{
+    --sgds-accordion-item-padding-y: var(--chakra-space-2);
+    --sgds-accordion-item-padding-x: var(--chakra-space-4);
+    --sgds-accordion-item-border-radius: 0;
+    --sgds-accordion-item-btn-border-radius:0;
+    --sgds-accordion-item-line-height: 1.5;
+    --sgds-accordion-border-color: var(--chakra-colors-chakra-border-color);
+    --sgds-accordion-active-color: var(--sgds-black);
+    --sgds-accordion-item-font-weight: 400;
+    /* --sgds-accordion-active-bg: var(--chakra-colors-blackAlpha-50); */
+}
+
+sgds-accordion-item::part(base){
+    border-right: 0;
+    border-left: 0;
+}
+
+sgds-accordion-item::part(content){
+    padding: var(--chakra-space-2) var(--chakra-space-4) var(--chakra-space-4) var(--chakra-space-4);
+}
+
+sgds-accordion-item::part(header):hover{
+ background-color: var(--chakra-colors-blackAlpha-50);
+ cursor: pointer;
+}
