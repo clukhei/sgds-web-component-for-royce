@@ -1,5 +1,12 @@
 .grid-system {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+* {
+  font-family: var(--sgds-body-font-family);
+}
+
+:root{
+  --sgds-body-line-height: var(--chakra-lineHeights-base);
 }

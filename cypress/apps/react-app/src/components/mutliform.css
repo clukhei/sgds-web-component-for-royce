@@ -1,0 +1,36 @@
+sgds-input{
+    --sgds-form-border-color: rgb(226, 232, 240);
+    --sgds-form-focus-box-shadow: 0 0 0 1px #3182ce;
+    --sgds-link: #3182ce;
+    --sgds-input-border-radius: var(--chakra-radii-md);
+    --sgds-form-label-font-weight: regular;
+    --sgds-form-label-margin-bottom: var(--chakra-space-2);
+}
+
+sgds-progress {
+    --sgds-progress-height: var(--chakra-sizes-3);
+    --sgds-progress-border-radius: 0;
+    --sgds-progress-bg: var(--chakra-colors-gray-100);
+    margin-bottom: 5%;
+    margin-inline-end: 5%;
+    margin-inline-start: 5%;
+}
+
+sgds-progress-bar {
+    --sgds-progress-bar-bg: var(--chakra-colors-blue-500);
+}
+sgds-button{
+    --sgds-btn-line-height: 1.5;
+    --sgds-btn-padding-y:   7px;
+    --sgds-btn-padding-x: 2.15rem;
+    --sgds-btn-font-weight: 600;
+    margin-right: 5%;
+}
+
+sgds-button[variant="secondary"].next-button{
+    --sgds-btn-hover-bg:var(--chakra-colors-teal-50);
+    --sgds-btn-color: var(--chakra-colors-teal-600);
+    --sgds-btn-border-color: var(--chakra-colors-teal-600);
+    --sgds-btn-hover-color: var(--sgds-btn-border-color);
+    --sgds-btn-bg:transparent;
+}

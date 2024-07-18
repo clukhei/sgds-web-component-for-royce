@@ -160,6 +160,7 @@
   --sgds-form-border-color: var(--sgds-border-color);
   --sgds-form-label-font-weight: 700;
   --sgds-form-label-color: var(--sgds-body-color);
+  --sgds-form-label-margin-bottom: 0;
   --sgds-form-hint-text-color: var(--sgds-body-color-lighter);
   --sgds-form-hint-text-font-weight: var(--sgds-body-font-weight);
   --sgds-form-hint-text-font-size: var(--sgds-body-font-size);

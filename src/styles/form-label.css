@@ -1,6 +1,6 @@
 .form-label {
     font-weight: var(--sgds-form-label-font-weight);
-    margin-bottom: 0;
+    margin-bottom: var(--sgds-form-label-margin-bottom);
     color: var(--sgds-form-label-color);
   }
 

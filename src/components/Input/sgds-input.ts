@@ -64,7 +64,7 @@ export class SgdsInput extends SgdsElement implements SgdsFormControl {
   /**Sets the maximum length of the input */
   @property({ type: Number, reflect: true }) maxlength: number;
   /**The input's placeholder text. */
-  @property({ type: String, reflect: true }) placeholder = "placeholder";
+  @property({ type: String, reflect: true }) placeholder: string;
   /**A pattern to validate input against. */
   @property({ type: String }) pattern: string;
   /**Autofocus the input */

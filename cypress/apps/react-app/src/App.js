@@ -1,5 +1,5 @@
 import "@govtechsg/sgds-web-component/themes/day.css";
-import "./app.css"
+import "./app.css";
 import { Accordion } from "./components/Accordion";
 import { ActionCard } from "./components/ActionCard";
 import { Alert } from "./components/Alert";
@@ -29,17 +29,24 @@ import { Table } from "./components/Table";
 import { Textarea } from "./components/Textarea";
 import { Toast } from "./components/Toast";
 import { Tooltip } from "./components/Tooltip";
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 import { ChakraAccordion } from "./chakra-components/Accordion";
+import { ChakraInput } from "./chakra-components/Input";
+import ChakraMultiStep from "./chakra-components/MultiForm";
+import SgdsMultiStep from "./components/MultiForm"
 function App() {
   return (
     <ChakraProvider>
       <Masthead />
       <Mainnav />
-      <div style={{padding: "1rem"}} className="grid-system">
-      <Accordion className="sgds-component"/>
-      <ChakraAccordion className="chakra-component" />
-      {/* <ActionCard />
+      <div style={{ padding: "1rem" }} className="grid-system">
+        <Accordion className="sgds-component" />
+        <ChakraAccordion className="chakra-component" />
+        <Input />
+        <ChakraInput />
+        <ChakraMultiStep />
+        <SgdsMultiStep/>
+        {/* <ActionCard />
       <Alert />
       <Badge />
       <Breadcrumb />
@@ -66,7 +73,7 @@ function App() {
       <Tooltip /> */}
       </div>
       <Footer />
-    </ChakraProvider> 
+    </ChakraProvider>
   );
 }
 
