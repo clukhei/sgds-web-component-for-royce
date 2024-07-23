@@ -1,6 +1,8 @@
-sgds-input{
+sgds-input#inputeg{
     --sgds-form-border-color: rgb(226, 232, 240);
     --sgds-form-focus-box-shadow: 0 0 0 1px #3182ce;
     --sgds-link: #3182ce;
-    --sgds-input-border-radius: var(--chakra-radii-md)
+    --sgds-input-border-radius: var(--chakra-radii-md);
+    --sgds-form-label-margin-bottom: 0;
+    --sgds-form-label-font-weight: bold;
 }

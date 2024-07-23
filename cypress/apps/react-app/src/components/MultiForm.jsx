@@ -312,7 +312,7 @@ export default function SgdsMultiStep() {
                 }}
                 variant="secondary"
                 outlined
-                className="next-button"
+                className=""
                 >
                 Next
               </Button>

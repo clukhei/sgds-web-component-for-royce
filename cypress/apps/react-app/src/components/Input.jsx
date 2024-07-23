@@ -3,6 +3,7 @@ import "./input.css"
 export const Input = () => {
     return (
         <SgdsInput
+           id="inputeg"
             type="text"
             label="Label"
             hinttext="This is a hint text"
