@@ -178,7 +178,6 @@ export class SgdsAccordionItem extends SgdsElement {
         <div
           class=${classMap({
             "accordion-body": true
-            // hidden: !this.open
           })}
         >
           <slot name="accordion-content" class="accordion-content" role="region" aria-labelledby="header"></slot>
