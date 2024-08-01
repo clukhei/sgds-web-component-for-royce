@@ -1,4 +1,4 @@
-import { html, type PropertyValues } from "lit";
+import { html } from "lit";
 import { property, query } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import SgdsElement from "../../base/sgds-element";
