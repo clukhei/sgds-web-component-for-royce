@@ -1,0 +1,13 @@
+{
+    "files": {
+      "playground_preview.html": {
+        "content": "<!doctype html>\n<html>\n<head>\n  <script type=\"module\" src=\"./my-element.js\"></script>\n</head>\n<body>\n  <my-element greet=\"World\"></my-element>\n</body>\n</html>",
+        "contentType": "text/html"
+      },
+      "my-element.js": {
+        "content": "class MyElement extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: 'open' });\n    this.shadowRoot.innerHTML = `\n      <p>Hello ${this.getAttribute('greet')}!</p>\n    `;\n  }\n}\ncustomElements.define('my-element', MyElement);",
+        "contentType": "text/javascript"
+      }
+    }
+  }
+  
