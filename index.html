@@ -10,236 +10,99 @@
     body {
       font-family: Arial, sans-serif;
     }
-    .sideBySide {
-      display: flex;
-      border: 1px solid #ddd;
-      max-width: 800px;
-      height: 400px;
-      margin-bottom: 48px;
-    }
-    .sideBySide > playground-file-editor {
-      width: 50%;
-      border-right: 1px solid #ddd;
-    }
-    .sideBySide > playground-preview {
-      width: 50%;
-    }
+   
   </style>
 </head>
 <body>
-  <h2>Interactive Playground</h2>
-  <section id="playground-section">
-    <playground-project id="playgroundProject">
-      <script type="sample/css" filename="src/components/button.css">
-:host {
-  --sgds-btn-padding-x: var(--sgds-input-btn-padding-x);
-  --sgds-btn-padding-y: var(--sgds-input-btn-padding-y);
-  --sgds-btn-font-family: var(--sgds-font-sans-serif);
-  --sgds-btn-font-size: 1rem;
-  --sgds-btn-font-weight: 400;
-  --sgds-btn-line-height: var(--sgds-line-height-lg);
-  --sgds-btn-color: var(--sgds-body-color);
-  --sgds-btn-bg: transparent;
-  --sgds-btn-border-width: var(--sgds-border-width);
-  --sgds-btn-border-color: light-dark(var(--sgds-gray-800), var(--sgds-gray-200));
-  --sgds-btn-border-radius: var(--sgds-border-radius);
-  --sgds-btn-disabled-color: var(--sgds-btn-color);
-  --sgds-btn-disabled-opacity: var(--sgds-disabled-opacity);
-  --sgds-btn-hover-color: light-dark(var(--sgds-white), var(--sgds-black));
-  --sgds-btn-hover-border-color: transparent;
-  --sgds-btn-hover-bg: light-dark(var(--sgds-black), var(--sgds-white));
-  --sgds-btn-active-color: light-dark(var(--sgds-white), var(--sgds-black));
-  --sgds-btn-active-bg: light-dark(var(--sgds-black), var(--sgds-white));
-  --sgds-btn-active-border-color: transparent;
-  --sgds-btn-focus-box-shadow-color: var(--sgds-gray-500);
-  --sgds-btn-focus-box-shadow: 0px 0px 0px var(--sgds-focus-width, 0.13rem) var(--sgds-btn-focus-box-shadow-color);
-  --sgds-btn-icon-gutter: var(--sgds-spacer-2);
-  display: inline-block;
-}
-
-button:focus:not(:focus-visible) {
-  outline: 0;
-}
-
-:host([variant="primary"]) {
-  --sgds-btn-color: var(--sgds-white);
-  --sgds-btn-bg: var(--sgds-primary-filled);
-  --sgds-btn-hover-color: #fff;
-  --sgds-btn-hover-bg: var(--sgds-primary-700);
-  --sgds-btn-active-color: #fff;
-  --sgds-btn-active-bg: var(--sgds-primary-700);
-  --sgds-btn-focus-box-shadow-color: var(--sgds-primary-300);
-  --sgds-btn-border-color: var(--sgds-primary-filled);
-}
-      </script>
-      <script type="sample/ts" filename="src/components/sgds-button.ts">
-import { property, query } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
-import { html, literal } from "lit/static-html.js";
-import SgdsElement from "../../base/sgds-element";
-import { FormSubmitController } from "../../utils/form";
-import buttonStyles from "./button.css";
-import anchorStyles from "../../styles/anchor.css";
-
-export type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info"
-  | "light"
-  | "dark"
-  | "link";
-
-export class SgdsButton extends SgdsElement {
-  static styles = [...SgdsElement.styles, anchorStyles, buttonStyles];
-
-  @query(".btn") private button: HTMLButtonElement | HTMLLinkElement;
-
-  /** @internal */
-  private readonly formSubmitController = new FormSubmitController(this, {
-    form: (input: HTMLInputElement) => {
-      if (input.hasAttribute("form")) {
-        const doc = input.getRootNode() as Document | ShadowRoot;
-        const formId = input.getAttribute("form");
-        return doc.getElementById(formId) as HTMLFormElement;
-      }
-      return input.closest("form");
-    }
-  });
-
-  @property({ reflect: true }) variant: ButtonVariant;
-
-  @property({ type: Boolean, reflect: true }) outlined = false;
-
-  @property({ reflect: true }) size: "sm" | "lg";
-
-  @property({ type: Boolean, reflect: true }) active = false;
-
-  @property({ type: Boolean, reflect: true }) disabled = false;
-
-  @property() type: "button" | "submit" | "reset" = "button";
-
-  @property() href: string;
-
-  @property() target: "_blank" | "_parent" | "_self" | "_top";
-
-  @property({ reflect: true }) download: string;
-
-  @property() form: string;
-
-  @property({ attribute: "formaction" }) formAction: string;
-
-  @property({ attribute: "formmethod" }) formMethod: "post" | "get";
-
-  @property({ attribute: "formnovalidate", type: Boolean })
-  formNoValidate: boolean;
-
-  @property({ attribute: "formtarget" }) formTarget: "_self" | "_blank" | "_parent" | "_top" | string;
-
-  public focus(options?: FocusOptions) {
-    this.button.focus(options);
-  }
-
-  public click() {
-    this.button.click();
-  }
-
-  public blur() {
-    this.button.blur();
-  }
-
-  handleBlur() {
-    this.emit("sgds-blur");
-  }
-
-  handleFocus() {
-    this.emit("sgds-focus");
-  }
-
-  handleClick(event: MouseEvent) {
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-
-    this.removeEventListener("click", this._clickHandler);
-    this.addEventListener("click", this._clickHandler);
-  }
-
-  private _clickHandler = () => {
-    if (this.type === "submit") {
-      this.formSubmitController.submit(this);
-    }
-    if (this.type === "reset") {
-      this.formSubmitController.reset(this);
-    }
-  };
-
-  render() {
-    const isLink = this.href;
-    const tag = isLink ? literal`a` : literal`button`;
-    return html`
-      <${tag}
-        class="sgds btn ${classMap({
-          disabled: this.disabled,
-          active: this.active,
-          [`btn-${this.size}`]: this.size,
-          "btn-link": this.variant === "link"
-        })}"
-        ?disabled=${ifDefined(isLink ? undefined : this.disabled)}
-        type=${ifDefined(isLink ? undefined : this.type)}
-        href=${ifDefined(isLink ? this.href : undefined)}
-        target=${ifDefined(isLink ? this.target : undefined)}
-        download=${ifDefined(isLink ? this.download : undefined)}
-        rel=${ifDefined(isLink && this.target === "_blank" ? "noreferrer noopener" : undefined)}
-        role=${ifDefined(isLink ? "button" : undefined)}
-        aria-disabled=${this.disabled ? "true" : "false"}
-        tabindex=${this.disabled ? "-1" : "0"}
-        @click=${this.handleClick}
-        @focus=${this.handleFocus}
-        @blur=${this.handleBlur}
-      >
-      <slot name="leftIcon"></slot>
-      <slot></slot>
-      <slot name="rightIcon"></slot>
-      </${tag}>
-    `;
-  }
-}
-
-customElements.define("sgds-button", SgdsButton);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "sgds-button": SgdsButton;
-  }
-}
-      </script>
+  <h2>Interactive Playground Example for SGDS Button</h2>
+    
+    <playground-ide editable-file-system line-numbers resizable>
       <script type="sample/html" filename="index.html">
-<!doctype html>
-<html>
-  <head>
-    <script type="module" src=""src/components/sgds-button.ts"">&lt;/script>
-    <link rel="stylesheet" href="src/components/button.css"">
-  </head>
-  <body>
-    <sgds-button variant="primary">Click Me</sgds-button>
-  </body>
-</html>
+        <!doctype html>
+          <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component">&lt;/script>
+            <style>
+              sgds-button {
+                --size: "sm"
+              }
+              .red-border {
+                border: 20px solid red;
+              }
+            </style>
+
+            <form id="form1">
+              <label for="input1">Form 1 Input:</label>
+              <input type="text" id="input1" name="input1">
+            </form>
+          
+            <!-- Form 2 -->
+            <form id="form2">
+              <label for="input2">Form 2 Input:</label>
+              <input type="text" id="input2" name="input2">
+            </form>
+      
+
+          </head>
+          <body>
+            <sgds-button 
+            id="dynamic-button" 
+            variant="primary" 
+            type="button" 
+            size = "lg"
+            active = ""
+            class="red-border"
+            href="https://www.google.com"
+            target = "_blank"
+            download="sample-download.pdf"
+            form="form1"
+            formaction="https://httpbin.org/post" 
+            formmethod="post" 
+            formtarget="_blank" 
+            formnovalidate>
+            Submit Form 1
+          </sgds-button>
+
+          <script type="module" src="button-settings.js"></script>
+
+        </body>
+      
       </script>
-    </playground-project>
 
-    <div class="sideBySide">
-      <playground-file-editor project="playgroundProject" filename="src/components/button.css">
-      </playground-file-editor>
+      <script type="sample/css" filename="styles.css">
+        
+          sgds-button {
+            --size: "sm"
+          }
+          .red-border {
+            border: 20px solid red;
+          }
+        
+      </script>
 
-      <playground-preview project="playgroundProject">
-      </playground-preview>
-    </div>
+      <script type="sample/js" filename="button-settings.js">
+        document.addEventListener('DOMContentLoaded', () => {
+          const button = document.getElementById('dynamic-button');
+          
+          if (button) {
+            button.addEventListener('sgds-blur', () => {
+              console.log('Button lost focus');
+            });
+    
+            // Add event listener for sgds-focus event
+            button.addEventListener('sgds-focus', () => {
+              console.log('Button gained focus');
+            });
+    
+            // Log the default slot content (button label)
+            console.log('Button label:', button.textContent.trim());
+          } else {
+            console.error('Button not found');
+          }
+        });
+      </script>
+
+
+
+  </playground-ide>
   </section>
 </body>
 </html>
