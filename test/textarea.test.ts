@@ -1,5 +1,5 @@
-import { SgdsTextarea, SgdsButton } from "../src/components";
-import "../src/index";
+import "./sgds-web-component";
+import type { SgdsTextarea, SgdsButton } from "../src/components";
 import { assert, fixture, html, expect, waitUntil, oneEvent } from "@open-wc/testing";
 import sinon from "sinon";
 import { sendKeys } from "@web/test-runner-commands";
@@ -17,7 +17,7 @@ describe("sgds-textarea", () => {
     assert.shadowDom.equal(
       el,
       `
-      <div class="text-area-label-wrapper d-flex justify-content-between">
+      <div class="text-area-label-wrapper">
         <label class="form-label">label</label>
         <div class="form-text">0/10</div>
       </div>

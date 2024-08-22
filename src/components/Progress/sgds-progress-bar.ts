@@ -2,13 +2,12 @@ import { property } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { classMap } from "lit/directives/class-map.js";
 import SgdsElement from "../../base/sgds-element";
-import styles from "./sgds-progress-bar.scss";
 import { html } from "lit";
-
-export type ProgressBarVariant = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark";
+import progressBarStyle from "./progress-bar.css";
+export type ProgressBarVariant = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "dark";
 
 export class SgdsProgressBar extends SgdsElement {
-  static styles = [SgdsElement.styles, styles];
+  static styles = [progressBarStyle];
 
   /** The background color of the progress bar */
   @property({ type: String, reflect: true }) variant: ProgressBarVariant;
@@ -52,8 +51,7 @@ export class SgdsProgressBar extends SgdsElement {
         class=${classMap({
           "progress-bar": true,
           "progress-bar-striped": this.striped,
-          "progress-bar-animated": this.animated,
-          [`bg-${this.variant}`]: this.variant
+          "progress-bar-animated": this.animated
         })}
         role="progressbar"
         style=${styleMap({ width: `${this.value}%` })}

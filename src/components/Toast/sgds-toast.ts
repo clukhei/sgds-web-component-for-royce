@@ -1,4 +1,5 @@
 import { property, query } from "lit/decorators.js";
+import { ScopedElementsMixin } from "@open-wc/scoped-elements/lit-element.js";
 import { classMap } from "lit/directives/class-map.js";
 import { html } from "lit/static-html.js";
 import SgdsElement from "../../base/sgds-element";
@@ -6,8 +7,8 @@ import { animateTo } from "../../utils/animate";
 import { getAnimation, setDefaultAnimation } from "../../utils/animation-registry";
 import { waitForEvent } from "../../utils/event";
 import { watch } from "../../utils/watch";
-import styles from "./sgds-toast.scss";
-
+import toastStyle from "./toast.css";
+import SgdsCloseButton from "../CloseButton/sgds-close-button";
 /**
  * @summary Toast allows you to convey quick messaging notifications to the user.
  *
@@ -15,15 +16,23 @@ import styles from "./sgds-toast.scss";
  * @slot icon - The slot to pass in icon to toast's header
  * @slot duration - When required, pass in the duration since toast appeared to this slot
  *
+ *
  * @event sgds-show - Emitted on show.
  * @event sgds-after-show - Emitted on show after animation has completed.
  * @event sgds-hide - Emitted on hide.
  * @event sgds-after-hide - Emitted on hide after animation has completed.
- *
- * @cssproperty --toast-icon-margin-right - The margin-right between toast's icon and title in its header. Defaults to 0.5rem
+ 
+ * @cssproperty --toast-icon-margin-right - The margin right between toast's icon and title in its header.
  */
-export class SgdsToast extends SgdsElement {
-  static styles = [SgdsElement.styles, styles];
+export class SgdsToast extends ScopedElementsMixin(SgdsElement) {
+  static styles = [...SgdsElement.styles, toastStyle];
+  /**@internal */
+  static get scopedElements() {
+    return {
+      "sgds-close-button": SgdsCloseButton
+    };
+  }
+
   /**@internal */
   @query("div.toast") toast: HTMLElement;
   /** Controls the appearance of toast */
@@ -36,22 +45,8 @@ export class SgdsToast extends SgdsElement {
   @property({ type: Boolean, reflect: true }) autohide = false;
   /** The amount of time taken for toast to disappear after its first render. It takes effect only when autohide is set to true */
   @property({ type: Number, reflect: true }) delay = 5000;
-  /** The colour variant of toast */
-  @property({ type: String, reflect: true }) variant: ToastVariant;
-  /** Optional for toast. Forwards to the base div wrapper of toast. Can be used to insert any utility classes such as `me-auto` */
-  @property({ type: String, reflect: true }) toastClasses: string;
-  /** The toast variant. */
-  @property({ type: String, reflect: true }) bg:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "warning"
-    | "info"
-    | "dark"
-    | "light";
   /**Adds CSS styling to `<Toast />` based on the defined status */
-  @property({ type: String, reflect: true }) status: "success" | "warning" | "danger";
+  @property({ type: String, reflect: true }) status: "success" | "warning" | "danger" | "info";
 
   /** Shows the toast */
   public async showToast() {
@@ -110,10 +105,7 @@ export class SgdsToast extends SgdsElement {
     return html`
       <div
         class="toast sgds show ${classMap({
-          [`is-${this.variant}`]: this.variant,
-          [`bg-${this.bg}`]: this.bg,
-          [`is-${this.status}`]: this.status,
-          [`${this.toastClasses}`]: this.toastClasses
+          [`is-${this.status}`]: this.status
         })}"
         role="alert"
         aria-hidden=${this.show ? "false" : "true"}
@@ -122,22 +114,15 @@ export class SgdsToast extends SgdsElement {
       >
         <div class="toast-header">
           <slot name="icon"></slot>
-          <strong class="me-auto">${this.title}</strong>
-          <small class="text-muted me-2"><slot name="duration"></slot></small>
-          <button
-            class="btn-sm btn-close"
-            aria-label="close toast"
-            @click=${this.handleCloseClick}
-            data-dismiss="toast"
-          ></button>
+          <strong>${this.title}</strong>
+          <small><slot name="duration"></slot></small>
+          <sgds-close-button ariaLabel="close toast" @click=${this.handleCloseClick}></sgds-close-button>
         </div>
         <div class="toast-body"><slot></slot></div>
       </div>
     `;
   }
 }
-
-export type ToastVariant = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "dark" | "light";
 
 export default SgdsToast;
 
