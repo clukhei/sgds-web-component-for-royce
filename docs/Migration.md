@@ -4,7 +4,7 @@
 
 ### Architectural Changes
 
-In version 1, we loaded SGDS styles into web components. While that saved us a lot of time building the web components and reduced maintenance overload across all our SGDS repositories, it has several drawbacks like big bundle size per component which CSS cannot be purged and customisation limitations by css properties.
+In version 1, we use `@govtechsg/sgds` as a dependency to style the web components. While that saved us a lot of time building the web components and reduced maintenance overload across all our SGDS repositories, it has several drawbacks like big bundle size per component which CSS cannot be purged and customisation limitations by css properties.
 
 In version 2, we rectified the issues by changing up the architecture of the library. Each component only carries their specific styles and any common styles that are shared are kept to a minimal. We also introduced a global css file to be imported with the components. The global css file contains all the css properties tokens and values referenced by the components.
 
@@ -93,23 +93,30 @@ Here are the css properties renamed in version 2
 
 We deleted some css properties in some components that have to maintain its style.
 
-| Component         | css properties removed in v2 | notes                                                 |
-| ----------------- | :--------------------------: | ----------------------------------------------------- |
-| sgds-masthead     |    --masthead-font-family    |                                                       |
-|                   |    --masthead-text-color     |                                                       |
-|                   |    --masthead-link-color     |                                                       |
-|                   | --masthead-link-color-hover  |                                                       |
-|                   |    --masthead-crest-color    |                                                       |
-| sgds-mainnav-item |  --mainnav-item-theme-color  | replaced with --mainnav-theme-color in <sgds-mainnav> |
-|                   |     --mainnav-item-color     |                                                       |
+| Component         |  css properties removed in v2   | notes                                                 |
+| ----------------- | :-----------------------------: | ----------------------------------------------------- |
+| sgds-masthead     |     --masthead-font-family      |                                                       |
+|                   |      --masthead-text-color      |                                                       |
+|                   |      --masthead-link-color      |                                                       |
+|                   |   --masthead-link-color-hover   |                                                       |
+|                   |     --masthead-crest-color      |                                                       |
+| sgds-mainnav-item |   --mainnav-item-theme-color    | replaced with --mainnav-theme-color in <sgds-mainnav> |
+|                   |      --mainnav-item-color       |                                                       |
+| sgds-pagination   | --pagination-hover-border-color |                                                       |
 
-#### sgds-badge: Renamed isLight to outlined 
+#### sgds-badge: Renamed isLight to outlined
 
-`isLight` prop is now renamed to `outlined` for better naming consistency
+`isLight` prop is now renamed to `outlined` for better naming consistency.
 
-### New Changes
+#### sgds-toast: Renamed status to variant
 
-#### New components introduced
+`status` prop is now renamed to `variant` for better naming consistency. The default value of `variant` is now `info`.
 
-1.  Switch
-2.  Close Button
+### Deprecations
+
+#### sgds-button
+
+The following types in `variant` prop are deprecated in v2 and will be removed in v3.
+
+- All outline-\*. Instead `outlined` type button is introduced
+- Success, warning, light, dark and info variants
