@@ -3,7 +3,7 @@
 (3.0.0-alpha branch)
  ## Setting up 
 1. Unzip file
-2. Installing the dependencies. In the terminal run:
+2. Ensure node version is 18+ . Installing the dependencies. In the terminal run:
   `npm run install`
 3. Build the component library 
  `npm run build`
