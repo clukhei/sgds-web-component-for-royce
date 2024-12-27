@@ -7,6 +7,8 @@ import "../lib/themes/day.css";
 import "../lib/themes/night.css";
 import "../lib/css/sgds.css";
 import "./global.css";
+// ESG
+import "./esg.css";
 import sgdsTheme from "./sgdsTheme";
 
 export const setCustomElementsManifestWithOptions = (

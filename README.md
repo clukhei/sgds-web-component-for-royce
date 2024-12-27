@@ -1,3 +1,20 @@
+# GUIDE FOR ROYCE
+
+(3.0.0-alpha branch)
+ ## Setting up 
+1. Unzip file
+2. Installing the dependencies. In the terminal run:
+  `npm run install`
+3. Build the component library 
+ `npm run build`
+ 4. Serve the storybook 
+ `npm run storybook`
+
+ ## Editing the styles 
+
+ 1. navigate to .storybook/esg.css 
+ 2. Follow the existing code pattern and add the tokens you would like to modify 
+
 <img src="https://img.shields.io/badge/lit-324FFF?style=for-the-badge&logo=lit&logoColor=white" /> &nbsp;
 <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" /> &nbsp;
 <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />&nbsp;
